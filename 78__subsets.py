@@ -4,10 +4,22 @@ from typing import List
 
 class Solution(unittest.TestCase):
     def test_example_1(self):
-        self.assertEquals(self.subsets([1, 2, 3]), [[], [1], [2], [1, 2], [3], [1, 3], [2, 3], [1, 2, 3]])
+        expected = [[], [1], [2], [1, 2], [3], [1, 3], [2, 3], [1, 2, 3]]
+        result = self.subsets([1, 2, 3])
+
+        expected.sort()
+        result.sort()
+
+        self.assertEquals(result, expected)
 
     def test_example_2(self):
-        self.assertEquals(self.subsets([0]), [[], [0]])
+        expected = [[], [0]]
+        result = self.subsets([0])
+
+        expected.sort()
+        result.sort()
+
+        self.assertEquals(result, expected)
 
     def subsets(self, nums: List[int]) -> List[List[int]]:
         results = []
@@ -18,5 +30,22 @@ class Solution(unittest.TestCase):
                 if (option >> ptr) & 1 == 1:
                     mutation.append(nums[ptr])
             results.append(mutation)
+
+        return results
+
+    def subsetsRecursive(self, nums: List[int]) -> List[List[int]]:
+        results = []
+
+        def helper(ptr: int, mutation: List[int]):
+            if ptr == len(nums):
+                results.append(mutation.copy())
+                return
+
+            mutation.append(nums[ptr])
+            helper(ptr + 1, mutation)
+            mutation.pop()
+            helper(ptr + 1, mutation)
+
+        helper(0, [])
 
         return results
