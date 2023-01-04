@@ -1,7 +1,7 @@
 import unittest
 from typing import List, Optional
 
-from TreeNode import TreeNode
+from lib.TreeNode import TreeNode
 
 
 class Solution(unittest.TestCase):
@@ -26,13 +26,13 @@ class Solution(unittest.TestCase):
         tree = self.buildTree([3, 9, 20, 15, 7], [9, 3, 15, 20, 7])
         expected = [3, 9, 20, 15, 7]
 
-        self.assertEquals(self.tree_to_array(tree), expected)
+        self.assertEqual(self.tree_to_array(tree), expected)
 
     def test_example_2(self):
         tree = self.buildTree([-1], [-1])
         expected = [-1]
 
-        self.assertEquals(self.tree_to_array(tree), expected)
+        self.assertEqual(self.tree_to_array(tree), expected)
 
     def buildTree(self, preorder: List[int], inorder: List[int]) -> Optional[TreeNode]:
         if not preorder or not inorder:

@@ -1,7 +1,7 @@
 import unittest
 from typing import Optional, List
 
-from TreeNode import TreeNode, build_tree
+from lib.TreeNode import TreeNode, build_tree
 
 
 class Solution(unittest.TestCase):

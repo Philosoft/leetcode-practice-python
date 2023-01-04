@@ -2,7 +2,7 @@ import unittest
 from collections import deque
 from typing import List, Optional
 
-from TreeNode import TreeNode, build_tree
+from lib.TreeNode import TreeNode, build_tree
 
 
 class Solution(unittest.TestCase):
@@ -10,16 +10,16 @@ class Solution(unittest.TestCase):
         root = build_tree([3, 9, 20, None, None, 15, 7])
         expected = [[3], [9, 20], [15, 7]]
 
-        self.assertEquals(self.levelOrder(root), expected)
+        self.assertEqual(self.levelOrder(root), expected)
 
     def test_example_2(self):
         root = build_tree([1])
         expected = [[1]]
 
-        self.assertEquals(self.levelOrder(root), expected)
+        self.assertEqual(self.levelOrder(root), expected)
 
     def test_example_3(self):
-        self.assertEquals(self.levelOrder(build_tree([])), [])
+        self.assertEqual(self.levelOrder(build_tree([])), [])
 
     def levelOrder(self, root: Optional[TreeNode]) -> List[List[int]]:
         if not root:

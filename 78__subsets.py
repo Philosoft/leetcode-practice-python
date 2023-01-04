@@ -10,7 +10,7 @@ class Solution(unittest.TestCase):
         expected.sort()
         result.sort()
 
-        self.assertEquals(result, expected)
+        self.assertEqual(result, expected)
 
     def test_example_2(self):
         expected = [[], [0]]
@@ -19,7 +19,7 @@ class Solution(unittest.TestCase):
         expected.sort()
         result.sort()
 
-        self.assertEquals(result, expected)
+        self.assertEqual(result, expected)
 
     def subsets(self, nums: List[int]) -> List[List[int]]:
         results = []

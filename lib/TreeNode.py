@@ -45,33 +45,33 @@ class TestTreeBuilding(unittest.TestCase):
         root = build_tree([0])
         self.assertIsNone(root.left)
         self.assertIsNone(root.right)
-        self.assertEquals(root.val, 0)
+        self.assertEqual(root.val, 0)
 
     def test_only_left_leaf(self):
         root = build_tree([0, 1, None])
 
-        self.assertEquals(root.val, 0)
+        self.assertEqual(root.val, 0)
 
         self.assertIsNotNone(root.left)
         self.assertIsInstance(root.left, TreeNode)
-        self.assertEquals(root.left.val, 1)
+        self.assertEqual(root.left.val, 1)
 
         self.assertIsNone(root.right)
 
     def test_only_right(self):
         root = build_tree([0, None, 2])
 
-        self.assertEquals(root.val, 0)
+        self.assertEqual(root.val, 0)
 
         self.assertIsNone(root.left)
 
         self.assertIsNotNone(root.right)
         self.assertIsInstance(root.right, TreeNode)
-        self.assertEquals(root.right.val, 2)
+        self.assertEqual(root.right.val, 2)
 
     def test_basic(self):
         data = [3, 9, 20, None, None, 15, 7]
         root = build_tree(data)
 
-        self.assertEquals(root.right.val, 20)
-        self.assertEquals(root.right.right.val, 7)
+        self.assertEqual(root.right.val, 20)
+        self.assertEqual(root.right.right.val, 7)
