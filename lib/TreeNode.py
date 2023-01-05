@@ -8,6 +8,7 @@ class TreeNode:
     val: int = 0
     left: Optional['TreeNode'] = None
     right: Optional['TreeNode'] = None
+    next: Optional['TreeNode'] = None
 
 
 # [3, 9, 20, None, None, 15, 7]
