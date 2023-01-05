@@ -18,9 +18,28 @@ class Solution(unittest.TestCase):
         self.assertEqual([1], flatten_list(self.removeNthFromEnd(build_list([1, 2]), 1)))
 
     def test_empty(self):
-        self.assertIsNone(self.removeNthFromEnd(None, 1))
+        self.assertIsNone(self.removeNthFromEnd(None, 0))
 
     def removeNthFromEnd(self, head: Optional[ListNode], n: int) -> Optional[ListNode]:
+        if not head:
+            return None
+
+        dummy = ListNode(0, head)
+        left = dummy
+        right = head
+
+        while n > 0:
+            n -= 1
+            right = right.next
+
+        while right:
+            right, left = right.next, left.next
+
+        left.next = left.next.next
+
+        return dummy.next
+
+    def removeNthFromEndTwoPass(self, head: Optional[ListNode], n: int) -> Optional[ListNode]:
         if not head:
             return None
 
