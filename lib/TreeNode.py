@@ -21,7 +21,7 @@ def build_tree(node_values: List[Optional[int]]) -> Optional[TreeNode]:
     if not node_values:
         return None
 
-    nodes = [TreeNode(node_values.pop(0))]
+    nodes: List[TreeNode] = [TreeNode(node_values.pop(0))]
     ptr = -1
     while node_values:
         ptr += 1
