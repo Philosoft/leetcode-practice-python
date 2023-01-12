@@ -6,15 +6,19 @@ from typing import List
 class Solution(unittest.TestCase):
     def test_smallest_island(self):
         self.assertEqual(1, self.numIslands([['1']]))
+        self.assertEqual(1, self.numIslandsDFS([['1']]))
 
     def test_no_islands_min(self):
         self.assertEqual(0, self.numIslands([['0']]))
+        self.assertEqual(0, self.numIslandsDFS([['0']]))
 
     def test_no_islands_big(self):
         self.assertEqual(0, self.numIslands([['0'] * 300] * 300))
+        self.assertEqual(0, self.numIslandsDFS([['0'] * 300] * 300))
 
     def test_one_gigantic_island(self):
         self.assertEqual(1, self.numIslands([['1'] * 300] * 300))
+        self.assertEqual(1, self.numIslandsDFS([['1'] * 300] * 300))
 
     def numIslands(self, grid: List[List[str]]) -> int:
         visited = set()
@@ -52,3 +56,30 @@ class Solution(unittest.TestCase):
                     island_counter += explore_island(row, column)
 
         return island_counter
+
+    def numIslandsDFS(self, grid: List[List[str]]) -> int:
+        count = 0
+
+        def trace_island(row, cell):
+            if row < 0 or cell < 0 or row >= len(grid) or cell >= len(grid[row]) or grid[row][cell] != "1":
+                return
+
+            grid[row][cell] = "2"
+
+            trace_island(row + 1, cell)
+            trace_island(row - 1, cell)
+            trace_island(row, cell + 1)
+            trace_island(row, cell - 1)
+
+        for row in range(len(grid)):
+            for cell in range(len(grid[row])):
+                if grid[row][cell] == "1":
+                    count += 1
+                    trace_island(row, cell)
+
+        for row in range(len(grid)):
+            for cell in range(len(grid[row])):
+                if grid[row][cell] == "2":
+                    grid[row][cell] = "1"
+
+        return count
