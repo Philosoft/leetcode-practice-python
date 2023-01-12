@@ -96,6 +96,3 @@ class Solution(unittest.TestCase):
                             right = m - 1
 
         return -1
-
-
-print(Solution.search([5, 1, 3], 5))
