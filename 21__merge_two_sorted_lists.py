@@ -49,8 +49,23 @@ class Solution(TestCase):
         for name, expected, l1, l2 in options:
             with self.subTest(name):
                 h1, h2 = build_list(l1), build_list(l2)
-
                 self.assertEqual(expected, flatten_list(self.mergeTwoLists(h1, h2)))
+
+                h1, h2 = build_list(l1), build_list(l2)
+                self.assertEqual(expected, flatten_list(self.mergeTwoListsRecursive(h1, h2)))
+
+    def mergeTwoListsRecursive(self, l1: Optional[ListNode], l2: Optional[ListNode]) -> Optional[ListNode]:
+        if not l1:
+            return l2
+        if not l2:
+            return l1
+
+        if l1.val <= l2.val:
+            l1.next = self.mergeTwoLists(l1.next, l2)
+            return l1
+        else:
+            l2.next = self.mergeTwoLists(l1, l2.next)
+            return l2
 
     def mergeTwoLists(self, list1: Optional[ListNode], list2: Optional[ListNode]) -> Optional[ListNode]:
         if not list1 or not list2:
