@@ -31,8 +31,11 @@ class Solution(TestCase):
         expected.sort()
         answer = self.combine(4, 2)
         answer.sort()
+        answer_optimized = self.combine_optimized(4, 2)
+        answer_optimized.sort()
 
         self.assertEqual(expected, answer)
+        self.assertEqual(expected, answer_optimized)
 
     def combine(self, n: int, k: int) -> List[List[int]]:
         result = []
@@ -51,6 +54,25 @@ class Solution(TestCase):
             helper(num + 1)
             option.pop()
             helper(num + 1)
+
+        helper(1)
+
+        return result
+
+    def combine_optimized(self, n: int, k: int) -> List[List[int]]:
+        result = []
+
+        option = []
+
+        def helper(num: int) -> None:
+            if len(option) == k:
+                result.append(option.copy())
+                return
+
+            for i in range(num, n + 1):
+                option.append(i)
+                helper(i + 1)
+                option.pop()
 
         helper(1)
 
