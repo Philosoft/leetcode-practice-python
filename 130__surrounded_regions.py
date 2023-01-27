@@ -38,7 +38,7 @@ Output: [["X"]]
 * board[i][j] is 'X' or 'O'.
 """
 from collections import deque
-from typing import Set, Tuple, List
+from typing import Set, Tuple, List, Deque
 from unittest import TestCase
 
 
@@ -96,7 +96,7 @@ class Solution(TestCase):
 
         def bfs(start_row: int, start_col: int):
             directions = [(0, 1), (0, -1), (1, 0), (-1, 0)]
-            q = deque([(start_row, start_col)])
+            q: Deque[Tuple[int, int]] = deque([(start_row, start_col)])
 
             checked.add((start_row, start_col))
             to_flip: Set[Tuple[int, int]] = set()
