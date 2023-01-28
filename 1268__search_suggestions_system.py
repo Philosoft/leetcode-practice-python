@@ -62,6 +62,7 @@ class Solution(TestCase):
         ]
 
         self.assertEqual(expected, self.suggestedProducts(products, search_term))
+        self.assertEqual(expected, self.suggestedProductsTwoPointers(products, search_term))
 
     def test_example_2(self):
         products = ["havana"]
@@ -69,6 +70,33 @@ class Solution(TestCase):
         expected = [["havana"], ["havana"], ["havana"], ["havana"], ["havana"], ["havana"]]
 
         self.assertEqual(expected, self.suggestedProducts(products, search_term))
+        self.assertEqual(expected, self.suggestedProductsTwoPointers(products, search_term))
+
+    def test_leetcode_8(self):
+        products = ["bags","baggage","banner","box","cloths"]
+        expected = [["baggage","bags","banner"],["baggage","bags","banner"],["baggage","bags"],["bags"]]
+
+        self.assertEqual(expected, self.suggestedProducts(products, "bags"))
+        self.assertEqual(expected, self.suggestedProductsTwoPointers(products, "bags"))
+
+    def suggestedProductsTwoPointers(self, products: List[str], searchWord: str) -> List[List[str]]:
+        products.sort()
+        left, right = 0, len(products) - 1
+        results = []
+        for ptr in range(len(searchWord)):
+            while left <= right and (len(products[left]) <= ptr or products[left][ptr] != searchWord[ptr]):
+                left += 1
+            while left <= right and (len(products[right]) <= ptr or products[right][ptr] != searchWord[ptr]):
+                right -= 1
+
+            match = []
+            for i in range(left, left + 3):
+                if i < len(products) and i <= right:
+                    match.append(products[i])
+
+            results.append(match)
+
+        return results
 
     def suggestedProducts(self, products: List[str], searchWord: str) -> List[List[str]]:
         trie = Trie()
