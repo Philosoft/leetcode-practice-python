@@ -35,6 +35,7 @@ Output: [3,null,2,null,1]
 * 0 <= nums[i] <= 1000
 * All integers in nums are unique.
 """
+from collections import deque
 from typing import List, Optional
 from unittest import TestCase
 
@@ -43,11 +44,53 @@ from lib.TreeNode import TreeNode
 
 class Solution(TestCase):
     def test_example_1(self):
-        root = self.constructMaximumBinaryTree([3, 2, 1, 6, 0, 5])
+        roots = []
+        nums = [3, 2, 1, 6, 0, 5]
+        roots.append(self.constructMaximumBinaryTree(nums))
+        roots.append(self.constructMaximumBinaryTreeIterative(nums))
 
-        self.assertEqual(6, root.val)
-        self.assertEqual(5, root.right.val)
-        self.assertEqual(3, root.left.val)
+        for root in roots:
+            self.assertEqual(6, root.val)
+            self.assertEqual(5, root.right.val)
+            self.assertEqual(3, root.left.val)
+
+    def constructMaximumBinaryTreeIterative(self, nums: List[int]) -> Optional[TreeNode]:
+        if not nums:
+            return None
+
+        process = deque()
+        build = deque()
+
+        m = max(nums)
+        m_idx = nums.index(m)
+        root = TreeNode(m)
+        process.append(nums[:m_idx])
+        process.append(nums[m_idx + 1:])
+        while process:
+            for partition in [process.popleft(), process.popleft()]:
+                if partition:
+                    part_max = max(partition)
+                    part_idx = partition.index(part_max)
+                    build.append(part_max)
+                    process.append(partition[:part_idx])
+                    process.append(partition[part_idx + 1:])
+                else:
+                    build.append(None)
+
+        level = deque([root])
+        while build:
+            for _ in range(len(level)):
+                node = level.popleft()
+                left, right = build.popleft(), build.popleft()
+                if node:
+                    node.left = TreeNode(left) if left is not None else None
+                    node.right = TreeNode(right) if right is not None else None
+                    if node.left:
+                        level.append(node.left)
+                    if node.right:
+                        level.append(node.right)
+
+        return root
 
     def constructMaximumBinaryTree(self, nums: List[int]) -> Optional[TreeNode]:
         if not nums:
@@ -56,6 +99,7 @@ class Solution(TestCase):
         m = max(nums)
         m_idx = nums.index(m)
         node = TreeNode(m)
-        node.left, node.right = self.constructMaximumBinaryTree(nums[:m_idx]), self.constructMaximumBinaryTree(nums[m_idx + 1:])
+        node.left, node.right = self.constructMaximumBinaryTree(nums[:m_idx]), self.constructMaximumBinaryTree(
+            nums[m_idx + 1:])
 
         return node
