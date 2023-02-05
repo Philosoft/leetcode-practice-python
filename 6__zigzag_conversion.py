@@ -76,7 +76,6 @@ class Solution(TestCase):
 
         result = []
         for row in transform:
-            print(row)
             result.append("".join(row))
 
         return "".join(result)
