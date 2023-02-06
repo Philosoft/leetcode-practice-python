@@ -28,10 +28,10 @@ def build_tree(node_values: List[Optional[int]]) -> Optional[TreeNode]:
         left, right = node_values.pop(0), node_values.pop(0)
 
         root = nodes[ptr]
-        if left:
+        if left is not None:
             root.left = TreeNode(left)
             nodes.append(root.left)
-        if right:
+        if right is not None:
             root.right = TreeNode(right)
             nodes.append(root.right)
 
@@ -76,3 +76,10 @@ class TestTreeBuilding(unittest.TestCase):
 
         self.assertEqual(root.right.val, 20)
         self.assertEqual(root.right.right.val, 7)
+
+    def test_zero_nodes(self):
+        root = build_tree([0, 0, 0])
+
+        self.assertEqual(0, root.val)
+        self.assertEqual(0, root.right.val)
+        self.assertEqual(0, root.left.val)
