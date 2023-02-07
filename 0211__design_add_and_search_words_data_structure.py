@@ -59,14 +59,6 @@ class WordDictionary:
         ptr.is_word = True
 
     def search(self, word: str) -> bool:
-        if '.' not in word:
-            ptr = self.root
-            for char in word:
-                if char not in ptr.children:
-                    return False
-                ptr = ptr.children[char]
-            return ptr.is_word
-
         def dfs(node: TrieNode, remainder: List[str]):
             if not remainder:
                 return node.is_word
