@@ -96,14 +96,14 @@ class WordDictionary:
 
 class TestDictionary(TestCase):
     def test_it(self):
-        wordDictionary = WordDictionary()
-        wordDictionary.addWord("bad")
-        wordDictionary.addWord("dad")
-        wordDictionary.addWord("mad")
-        self.assertFalse(wordDictionary.search("pad"))
-        self.assertTrue(wordDictionary.search("bad"))
-        self.assertTrue(wordDictionary.search(".ad"))
-        self.assertTrue(wordDictionary.search("b.."))
+        wd = WordDictionary()
+        wd.addWord("bad")
+        wd.addWord("dad")
+        wd.addWord("mad")
+        self.assertFalse(wd.search("pad"))
+        self.assertTrue(wd.search("bad"))
+        self.assertTrue(wd.search(".ad"))
+        self.assertTrue(wd.search("b.."))
 
     def test_further(self):
         wd = WordDictionary()
