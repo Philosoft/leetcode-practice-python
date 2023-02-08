@@ -52,7 +52,7 @@ class Solution(TestCase):
     def characterReplacement(self, s: str, k: int) -> int:
         counter = Counter()
         l, r = 0, 0
-        counter[s[0]] = counter.get(s[0], 0) + 1
+        counter[s[0]] += 1
         max_length = 1
         window_size = 1
         while r + 1 < len(s):
