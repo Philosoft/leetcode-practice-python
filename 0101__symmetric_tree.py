@@ -15,9 +15,6 @@ class Solution(TestCase):
         if not root or (not root.left and not root.right):
             return True
 
-        if not root.left or not root.right:
-            return False
-
         def helper(left: Optional[TreeNode], right: Optional[TreeNode]):
             if not left and not right:
                 return True
