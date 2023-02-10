@@ -49,28 +49,37 @@ from unittest import TestCase
 class Solution(TestCase):
     def test_example_1(self):
         matrix = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
+        matrix_for_transpose = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
 
         expected = [[7, 4, 1], [8, 5, 2], [9, 6, 3]]
         self.rotate(matrix)
+        self.rotateViaTranspose(matrix_for_transpose)
 
         self.assertEqual(expected, matrix)
+        self.assertEqual(expected, matrix_for_transpose)
 
     def test_example_2(self):
         matrix = [[5, 1, 9, 11], [2, 4, 8, 10], [13, 3, 6, 7], [15, 14, 12, 16]]
+        matrix_for_transpose = [[5, 1, 9, 11], [2, 4, 8, 10], [13, 3, 6, 7], [15, 14, 12, 16]]
 
         expected = [[15, 13, 2, 5], [14, 3, 4, 1], [12, 6, 8, 9], [16, 7, 10, 11]]
 
         self.rotate(matrix)
+        self.rotateViaTranspose(matrix_for_transpose)
 
         self.assertEqual(expected, matrix)
+        self.assertEqual(expected, matrix_for_transpose)
 
     def test_single_cell(self):
         matrix = [[1]]
+        matrix_for_transpose = [[1]]
         expected = [[1]]
 
         self.rotate(matrix)
+        self.rotateViaTranspose(matrix_for_transpose)
 
         self.assertEqual(expected, matrix)
+        self.assertEqual(expected, matrix_for_transpose)
 
     def rotate(self, matrix: List[List[int]]) -> None:
         """
@@ -97,3 +106,17 @@ class Solution(TestCase):
                 matrix[top + i][right] = tmp
             left += 1
             right -= 1
+
+    def rotateViaTranspose(self, matrix: List[List[int]]) -> None:
+        # transpose
+        for row in range(len(matrix)):
+            for col in range(row, len(matrix[row])):
+                matrix[row][col], matrix[col][row] = matrix[col][row], matrix[row][col]
+
+        # reverse each row
+        for row in range(len(matrix)):
+            left, right = 0, len(matrix[row]) - 1
+            while left < right:
+                matrix[row][left], matrix[row][right] = matrix[row][right], matrix[row][left]
+                left += 1
+                right -= 1
