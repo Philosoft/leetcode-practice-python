@@ -86,6 +86,7 @@ class Solution(TestCase):
                         q.append((new_row, new_col))
             steps += 1
 
+        # possibly return steps - 1 would work as well
         max_distance = -1
         for row in mapped_grid:
             max_distance = max(max_distance, max(row))
