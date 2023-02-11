@@ -1,5 +1,5 @@
 from collections import deque
-from typing import List
+from typing import List, Deque, Optional, Tuple
 from unittest import TestCase
 
 
@@ -29,6 +29,51 @@ class Solution(TestCase):
 
     def shortestAlternatingPaths(self, n: int, redEdges: List[List[int]], blueEdges: List[List[int]]) -> List[int]:
         adj = {}
+        for src, dst in redEdges:
+            if src not in adj:
+                adj[src] = {}
+            if 'red' not in adj[src]:
+                adj[src]['red'] = set()
+
+            adj[src]['red'].add(dst)
+
+        for src, dst in blueEdges:
+            if src not in adj:
+                adj[src] = {}
+            if 'blue' not in adj[src]:
+                adj[src]['blue'] = set()
+
+            adj[src]['blue'].add(dst)
+
+        result = [-1] * n
+        q: Deque[Tuple[int, Optional[str]]] = deque([(0, None)])  # current node, color of edge that was used
+        steps = 0
+        visited = set()
+        while q:
+            for _ in range(len(q)):
+                node, color = q.popleft()
+                if result[node] == -1:
+                    result[node] = steps
+
+                if color != 'red' and node in adj and 'red' in adj[node]:
+                    for nei in adj[node]['red']:
+                        next_step = (nei, 'red')
+                        if next_step not in visited:
+                            visited.add(next_step)
+                            q.append(next_step)
+                if color != 'blue' and node in adj and 'blue' in adj[node]:
+                    for nei in adj[node]['blue']:
+                        next_step = (nei, 'blue')
+                        if next_step not in visited:
+                            visited.add(next_step)
+                            q.append(next_step)
+            steps += 1
+
+        return result
+
+    def shortestAlternatingPathsFirstTry(self, n: int, redEdges: List[List[int]], blueEdges: List[List[int]]) -> List[
+        int]:
+        adj = {}
         for a, b in redEdges:
             if a not in adj:
                 adj[a] = {}
@@ -44,8 +89,6 @@ class Solution(TestCase):
                 adj[a]['blue'] = set()
 
             adj[a]['blue'].add(b)
-
-        paths_len = []
 
         def find_shortest_alt_path(target: int, edge_color: str):
             q = deque([(0, edge_color, -1)])
