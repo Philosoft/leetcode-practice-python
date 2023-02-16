@@ -72,7 +72,6 @@ class Solution(TestCase):
                     left += 1
                     while left < right and nums[left - 1] == nums[left]:
                         left += 1
-                    right = len(nums) - 1
                 elif s < 0:
                     left += 1
                 else:
