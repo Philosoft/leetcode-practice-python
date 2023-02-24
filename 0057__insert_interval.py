@@ -44,10 +44,13 @@ class Solution(TestCase):
             ([[1, 2], [3, 10], [12, 16]], [[1, 2], [3, 5], [6, 7], [8, 10], [12, 16]], [4, 8]),
             ([[1, 2]], [], [1, 2]),
             ([[0, 0], [1, 5]], [[1, 5]], [0, 0]),
+            ([[0, 5], [7, 16]], [[0, 5], [9, 12]], [7, 16]),
+            ([[3, 5], [6, 6], [12, 15]], [[3, 5], [12, 15]], [6, 6]),
         ]
         for expected, intervals, new_interval in options:
             with self.subTest():
                 self.assertEqual(expected, self.insert(intervals, new_interval))
+                self.assertEqual(expected, self.insertNew(intervals, new_interval))
 
     def insert(self, intervals: List[List[int]], newInterval: List[int]) -> List[List[int]]:
         new_start, new_end = newInterval
@@ -71,5 +74,60 @@ class Solution(TestCase):
 
         if insert_position is None:
             result.append(newInterval)
+
+        return result
+
+    def insertNew(self, intervals, newInterval):
+        """
+        :type intervals: List[List[int]]
+        :type newInterval: List[int]
+        :rtype: List[List[int]]
+        """
+        if len(newInterval) == 0:
+            return intervals
+
+        interval_inserted = False
+        result = []
+
+        i = 0
+        while i < len(intervals):
+            if not interval_inserted:
+                if len(result) > 0:
+                    # intersects with previous
+                    if (
+                        result[-1][0] <= newInterval[0] <= result[-1][1]
+                        or newInterval[0] <= result[-1][0] <= newInterval[1]
+                    ):
+                        result[-1][0] = min(newInterval[0], result[-1][0])
+                        result[-1][1] = max(newInterval[1], result[-1][1])
+                        interval_inserted = True
+                    # perfect fit
+                    elif result[-1][0] < newInterval[0] < intervals[i][0]:
+                        result.append(newInterval)
+                        interval_inserted = True
+                elif newInterval[0] < intervals[i][0]:
+                    result.append(newInterval)
+                    interval_inserted = True
+
+            # just merge/copy as we go
+            if len(result) > 0 and result[-1][0] <= intervals[i][0] <= result[-1][1]:
+                result[-1][1] = max(result[-1][1], intervals[i][1])
+            else:
+                result.append(intervals[i])
+
+            i += 1
+
+        if not interval_inserted:
+            if (
+                len(result) > 0
+                and (
+                    result[-1][0] <= newInterval[0] <= result[-1][1]
+                    or newInterval[0] <= result[-1][0] <= newInterval[1]
+                )
+            ):
+                result[-1][0] = min(result[-1][0], newInterval[0])
+                result[-1][1] = max(result[-1][1], newInterval[1])
+            else:
+                result.append(newInterval)
 
         return result

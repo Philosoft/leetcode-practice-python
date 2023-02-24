@@ -32,6 +32,7 @@ Explanation:
 * 0 <= ai, bi < numCourses
 * All the pairs prerequisites[i] are unique.
 """
+from collections import deque
 from typing import List, Dict, Set
 from unittest import TestCase
 
@@ -39,6 +40,9 @@ from unittest import TestCase
 class Solution(TestCase):
     def test_it(self):
         self.assertTrue(self.canFinish(5, [[1, 4], [2, 4], [3, 1], [3, 2]]))
+        self.assertTrue(self.canFinish(5, [[1, 4], [2, 4], [3, 1], [3, 2]]))
+        self.assertFalse(self.canFinish(3, [[0, 1], [0, 2], [1, 0]]))
+        self.assertTrue(self.canFinish(3, [[0, 1], [0, 2], [1, 2]]))
 
     def canFinish(self, numCourses: int, prerequisites: List[List[int]]) -> bool:
         if not prerequisites:
