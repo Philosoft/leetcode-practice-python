@@ -34,9 +34,19 @@ from unittest import TestCase
 class Solution(TestCase):
     def test_example_1(self):
         self.assertTrue(self.canJump([2, 3, 1, 1, 4]))
+        self.assertTrue(self.canJumpGreedy([2, 3, 1, 1, 4]))
 
     def test_example_2(self):
         self.assertFalse(self.canJump([3, 2, 1, 0, 4]))
+        self.assertFalse(self.canJumpGreedy([3, 2, 1, 0, 4]))
+
+    def canJumpGreedy(self, nums: List[int]) -> bool:
+        last_reachable_position = len(nums) - 1
+        for i in range(len(nums) - 2, -1, -1):
+            if i + nums[i] >= last_reachable_position:
+                last_reachable_position = i
+
+        return last_reachable_position == 0
 
     def canJump(self, nums: List[int]) -> bool:
         dp = [False] * len(nums)
