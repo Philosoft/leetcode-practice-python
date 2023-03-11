@@ -50,8 +50,14 @@ from unittest import TestCase
 
 class Solution(TestCase):
     def test_it(self):
-        options = [("example 1", 2, "12"), ("example 2", 3, "226"), ("example 3 (leading zero)", 0, "06"),
-            ("a lot of 1s", 10946, "1" * 20), ("a lot of 1s v2", 5702887, "1" * 33), ("999", 1, "999"), ]
+        options = [
+            ("example 1", 2, "12"),
+            ("example 2", 3, "226"),
+            ("example 3 (leading zero)", 0, "06"),
+            ("a lot of 1s", 10946, "1" * 20),
+            ("a lot of 1s v2", 5702887, "1" * 33),
+            ("999", 1, "999"),
+        ]
 
         for name, expected, string in options:
             with self.subTest(name):
