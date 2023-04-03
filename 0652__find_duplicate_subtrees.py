@@ -22,6 +22,4 @@ class Solution:
 
         dfs(root)
 
-        print(hash_to_roots)
-
         return list(map(lambda x: x[0], filter(lambda x: len(x) > 1, hash_to_roots.values())))

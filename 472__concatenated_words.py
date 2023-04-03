@@ -271,14 +271,6 @@ class Solution(TestCase):
         #             partition.append(fragment)
         #         yield list(map(lambda l: "".join(list(reversed(l))), reversed(partition)))
         #     return []
-        def partition(w: str) -> List[str]:
-            length = len(w)
-            for i in range(length + 1):
-                for j in range(1 if i == length else 0, i):
-                    print(w[j:i])
-                print('============')
-            return []
-
         @cache
         def search_one_word(w: str) -> bool:
             return trie.search(w)
