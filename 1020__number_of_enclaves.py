@@ -8,10 +8,40 @@ from unittest import TestCase
 class Solution(TestCase):
     def test_example_1(self):
         self.assertEqual(3, self.numEnclaves([[0, 0, 0, 0], [1, 0, 1, 0], [0, 1, 1, 0], [0, 0, 0, 0]]))
+        self.assertEqual(3, self.numEnclavesSmarter([[0, 0, 0, 0], [1, 0, 1, 0], [0, 1, 1, 0], [0, 0, 0, 0]]))
 
     def test_example_2(self):
         self.assertEqual(0, self.numEnclaves([[0, 1, 1, 0], [0, 0, 1, 0], [0, 0, 1, 0], [0, 0, 0, 0]]))
+        self.assertEqual(0, self.numEnclavesSmarter([[0, 1, 1, 0], [0, 0, 1, 0], [0, 0, 1, 0], [0, 0, 0, 0]]))
 
+    def numEnclavesSmarter(self, grid: List[List[int]]) -> int:
+        def sink(row: int, col: int) -> None:
+            grid[row][col] = 0
+            directions = [
+                (0, 1),
+                (0, -1),
+                (1, 0),
+                (-1, 0),
+            ]
+
+            for dr, dc in directions:
+                new_row, new_col = row + dr, col + dc
+                if 0 <= new_row < len(grid) and 0 <= new_col < len(grid[new_row]) and grid[new_row][new_col] == 1:
+                    sink(new_row, new_col)
+
+        for col in range(len(grid[0])):
+            if grid[0][col] == 1:
+                sink(0, col)
+            if grid[-1][col] == 1:
+                sink(len(grid) - 1, col)
+
+        for row in range(len(grid)):
+            if grid[row][0] == 1:
+                sink(row, 0)
+            if grid[row][-1] == 1:
+                sink(row, len(grid[row]) - 1)
+
+        return sum([sum(row) for row in grid])
     def numEnclaves(self, grid: List[List[int]]) -> int:
         enclaves = 0
         visited: Set[Tuple[int, int]] = set()
