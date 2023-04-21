@@ -25,7 +25,11 @@ def build_tree(node_values: List[Optional[int]]) -> Optional[TreeNode]:
     ptr = -1
     while node_values:
         ptr += 1
-        left, right = node_values.pop(0), node_values.pop(0)
+        left, right = None, None
+        if node_values:
+            left = node_values.pop(0)
+        if node_values:
+            right = node_values.pop(0)
 
         root = nodes[ptr]
         if left is not None:
