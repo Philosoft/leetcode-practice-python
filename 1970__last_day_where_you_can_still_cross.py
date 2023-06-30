@@ -45,7 +45,6 @@ class Solution(TestCase):
                     q.append(possible_starting_point)  # ⚠️ 1-based matrix
                     visited.add(possible_starting_point)
 
-            visited: Set[Tuple[int, int]]
             while q:
                 r, c = q.popleft()
                 cell = (r, c)
